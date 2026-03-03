@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { SelectedMovieIDProvider } from "./context/DataContext";
 import { useMovies } from "./components/useMovie/useMovies";
 import { Minus } from "lucide-react";
@@ -6,6 +6,7 @@ import Search from "./components/Search/Search";
 import Button from "./components/Button/Button";
 import MovieList from "./components/Movie__list/MovieList";
 import Summary from "./components/Summary/Summary";
+import Details from "./components/Details/Details";
 
 function App() {
   const { movies } = useMovies("interstellar");
@@ -32,6 +33,7 @@ function App() {
 
             <div className="list-watched">
               <Summary />
+              <Details />
             </div>
           </section>
         </SelectedMovieIDProvider>
