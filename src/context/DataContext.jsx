@@ -1,14 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 
-const SelectedMovieIDContext = createContext();
-const WatchedMoviesContext = createContext();
-
 const DataContext = createContext();
-
-const value = {
-  selectedMovieID: null,
-  watchedMovies: [],
-};
 
 export function DataProvider({ children }) {
   const [selectedMovieID, setSelectedMovieID] = useState(null);

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import classes from "./Search.module.css";
 
-export default function Search({ value, onChange }) {
+export default forwardRef(function Search({ value, onChange }, ref) {
   return (
     <input
+      ref={ref}
       className={classes.search}
       type="search"
       name="search__movies"
@@ -13,4 +14,4 @@ export default function Search({ value, onChange }) {
       onChange={onChange}
     />
   );
-}
+});

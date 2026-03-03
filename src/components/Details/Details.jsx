@@ -37,6 +37,10 @@ function Details() {
       setIsLoading(false);
     }
     getMovieDetails();
+
+    return () => {
+      setSelectedMovie(null);
+    };
   }, [selectedMovieID, watchedMovies]);
 
   useEffect(() => {

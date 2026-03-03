@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { DataProvider, useDataContext } from "./context/DataContext";
 import { useMovies } from "./components/useMovie/useMovies";
 import { Minus, Plus, Loader, TriangleAlert } from "lucide-react";
@@ -17,6 +17,22 @@ function App() {
   const [query, setQuery] = useState("");
   const debouncedQuery = useDebounce(query, 500);
   const { movies, isLoading, error } = useMovies(debouncedQuery);
+  const searchInputRef = useRef();
+
+  useEffect(() => {
+    function handleFocus(e) {
+      if (e.code === "Enter") {
+        if (searchInputRef.current === document.activeElement) return;
+        searchInputRef.current.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleFocus);
+
+    return () => {
+      document.removeEventListener("keydown", handleFocus);
+    };
+  });
 
   function handleSearch(e) {
     setQuery(e.target.value);
@@ -29,9 +45,9 @@ function App() {
           <span>🍿</span>
           <h1>usePopcorn</h1>
         </div>
-        <Search value={query} onChange={handleSearch} />
+        <Search ref={searchInputRef} value={query} onChange={handleSearch} />
 
-        <p className="num-results">Found 10 resut</p>
+        <p className="num-results">Found {movies.length} results</p>
       </nav>
 
       <main className="main">
