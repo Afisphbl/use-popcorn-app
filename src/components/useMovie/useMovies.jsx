@@ -29,6 +29,11 @@ export function useMovies(query) {
       }
     }
     fetchMovies();
+
+    return () => {
+      setMovies([]);
+      setError("");
+    };
   }, [query]);
 
   return { movies, isLoading, error };

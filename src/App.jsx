@@ -8,12 +8,19 @@ import MovieList from "./components/Movie__list/MovieList";
 import Summary from "./components/Summary/Summary";
 import Details from "./components/Details/Details";
 import WatchedMovies from "./components/WatchedMovies/WatchedMovies";
+import useDebounce from "./components/Debounce/Debounce";
 
 function App() {
-  const { movies, isLoading, error } = useMovies("inters");
   const [showMovieList, setShowMovieList] = useState(true);
   const [showDetails, setShowDetails] = useState(true);
   const { selectedMovieID, watchedMovies } = useDataContext();
+  const [query, setQuery] = useState("");
+  const debouncedQuery = useDebounce(query, 500);
+  const { movies, isLoading, error } = useMovies(debouncedQuery);
+
+  function handleSearch(e) {
+    setQuery(e.target.value);
+  }
 
   return (
     <>
@@ -22,7 +29,7 @@ function App() {
           <span>🍿</span>
           <h1>usePopcorn</h1>
         </div>
-        <Search />
+        <Search value={query} onChange={handleSearch} />
 
         <p className="num-results">Found 10 resut</p>
       </nav>
