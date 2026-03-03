@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Minus } from "lucide-react";
 import Search from "./components/Search/Search";
 import Button from "./components/Button/Button";
+import MovieList from "./components/Movie__list/MovieList";
 import Summary from "./components/Summary/Summary";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <main className="main">
         <section className="box">
           <Button class__name="btn-toggle">{<Minus size={16} />}</Button>
+          <MovieList />
         </section>
         <section className="box">
           <Button class__name="btn-toggle">{<Minus size={16} />}</Button>

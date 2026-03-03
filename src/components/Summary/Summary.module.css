@@ -14,7 +14,7 @@
 .summary div {
   display: flex;
   align-items: center;
-  gap: 2.4rem;
+  gap: 4rem;
   font-size: 1.6rem;
   font-weight: 600;
 }
