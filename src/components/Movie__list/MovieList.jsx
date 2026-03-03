@@ -1,44 +1,24 @@
 import React from "react";
+import { useSelectedMovieID } from "../../context/DataContext";
 import classes from "./MovieList.module.css";
 
-function MovieList() {
+function MovieList({ movies }) {
+  const { updateSelectedMovieID } = useSelectedMovieID();
   return (
     <ul className={`${classes.list} ${classes["list-movies"]}`}>
-      <li>
-        <img src="./usepopcornLogo.png" alt="logo" />
-        <h3>usePopcorn</h3>
-        <div>
-          <p>Rate</p>
-        </div>
-      </li>
-      <li>
-        <img src="./usepopcornLogo.png" alt="logo" />
-        <h3>usePopcorn</h3>
-        <div>
-          <p>Rate</p>
-        </div>
-      </li>
-      <li>
-        <img src="./usepopcornLogo.png" alt="logo" />
-        <h3>usePopcorn</h3>
-        <div>
-          <p>Rate</p>
-        </div>
-      </li>
-      <li>
-        <img src="./usepopcornLogo.png" alt="logo" />
-        <h3>usePopcorn</h3>
-        <div>
-          <p>Rate</p>
-        </div>
-      </li>
-      <li>
-        <img src="./usepopcornLogo.png" alt="logo" />
-        <h3>usePopcorn</h3>
-        <div>
-          <p>Rate</p>
-        </div>
-      </li>
+      {movies.map((movie) => (
+        <li
+          key={movie.imdbID}
+          onClick={() => updateSelectedMovieID(movie.imdbID)}
+        >
+          <img src={movie.Poster} alt={movie.Title} />
+          <h3>{movie.Title}</h3>
+
+          <div>
+            <p>{movie.Year}</p>
+          </div>
+        </li>
+      ))}
     </ul>
   );
 }

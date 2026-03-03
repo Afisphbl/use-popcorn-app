@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { SelectedMovieIDProvider } from "./context/DataContext";
+import { useMovies } from "./components/useMovie/useMovies";
 import { Minus } from "lucide-react";
 import Search from "./components/Search/Search";
 import Button from "./components/Button/Button";
@@ -6,6 +8,7 @@ import MovieList from "./components/Movie__list/MovieList";
 import Summary from "./components/Summary/Summary";
 
 function App() {
+  const { movies } = useMovies("interstellar");
   return (
     <>
       <nav className="nav-bar">
@@ -19,17 +22,19 @@ function App() {
       </nav>
 
       <main className="main">
-        <section className="box">
-          <Button class__name="btn-toggle">{<Minus size={16} />}</Button>
-          <MovieList />
-        </section>
-        <section className="box">
-          <Button class__name="btn-toggle">{<Minus size={16} />}</Button>
+        <SelectedMovieIDProvider>
+          <section className="box">
+            <Button class__name="btn-toggle">{<Minus size={16} />}</Button>
+            <MovieList movies={movies} />
+          </section>
+          <section className="box">
+            <Button class__name="btn-toggle">{<Minus size={16} />}</Button>
 
-          <div className="list-watched">
-            <Summary />
-          </div>
-        </section>
+            <div className="list-watched">
+              <Summary />
+            </div>
+          </section>
+        </SelectedMovieIDProvider>
       </main>
     </>
   );
