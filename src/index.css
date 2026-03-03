@@ -87,6 +87,17 @@ body {
   margin: 4.8rem;
 }
 
+.animate-spin {
+  color: var(--color-primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .error {
   text-align: center;
   font-size: 2rem;

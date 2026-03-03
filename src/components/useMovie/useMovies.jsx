@@ -5,11 +5,13 @@ export const URL = `http://www.omdbapi.com/`;
 
 export function useMovies(query) {
   const [movies, setMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (query.length < 3) return;
 
     async function fetchMovies() {
+      setIsLoading(true);
       try {
         const res = await fetch(`${URL}?apikey=${API_KEY}&s=${query}`);
         if (!res.ok)
@@ -21,10 +23,12 @@ export function useMovies(query) {
         setMovies(data.Search);
       } catch (error) {
         console.error(error.message);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchMovies();
   }, [query]);
 
-  return { movies };
+  return { movies, isLoading };
 }

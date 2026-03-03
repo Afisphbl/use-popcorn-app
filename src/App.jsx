@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DataProvider, useDataContext } from "./context/DataContext";
 import { useMovies } from "./components/useMovie/useMovies";
-import { Minus, Plus } from "lucide-react";
+import { Minus, Plus, Loader } from "lucide-react";
 import Search from "./components/Search/Search";
 import Button from "./components/Button/Button";
 import MovieList from "./components/Movie__list/MovieList";
@@ -10,7 +10,7 @@ import Details from "./components/Details/Details";
 import WatchedMovies from "./components/WatchedMovies/WatchedMovies";
 
 function App() {
-  const { movies } = useMovies("interstellar");
+  const { movies, isLoading } = useMovies("interstellar");
   const [showMovieList, setShowMovieList] = useState(true);
   const [showDetails, setShowDetails] = useState(true);
   const { selectedMovieID, watchedMovies } = useDataContext();
@@ -35,7 +35,12 @@ function App() {
           >
             {showMovieList ? <Minus size={16} /> : <Plus size={16} />}
           </Button>
-          {showMovieList && <MovieList movies={movies} />}
+          {isLoading && (
+            <p className="loader">
+              <Loader className="animate-spin" size={24} />
+            </p>
+          )}
+          {showMovieList && !isLoading && <MovieList movies={movies} />}
         </section>
 
         <section className="box">
