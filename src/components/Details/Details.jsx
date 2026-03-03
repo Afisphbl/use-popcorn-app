@@ -8,22 +8,41 @@ import classes from "./Details.module.css";
 
 function Details() {
   const [userRating, setUserRating] = useState(0);
-  const { selectedMovieID, addWatchedMovie } = useDataContext();
+  const { selectedMovieID, addWatchedMovie, watchedMovies } = useDataContext();
   const [selectedMovie, setSelectedMovie] = useState(null);
+  const [addedToWatched, setAddedToWatched] = useState(false);
 
   useEffect(() => {
     async function getMovieDetails() {
       if (!selectedMovieID) return;
+      const searchMovieWatchedList = watchedMovies.find(
+        (movie) => movie.imdbID === selectedMovieID,
+      );
+
+      if (searchMovieWatchedList) {
+        setSelectedMovie(searchMovieWatchedList);
+        return;
+      }
+
       const res = await fetch(`${URL}?apikey=${API_KEY}&i=${selectedMovieID}`);
       const data = await res.json();
       setSelectedMovie(data);
     }
     getMovieDetails();
-  }, [selectedMovieID]);
+  }, [selectedMovieID, watchedMovies]);
 
   useEffect(() => {
     setUserRating(0);
-  }, [selectedMovieID]);
+    const searchMovieWatchedList = watchedMovies.find(
+      (movie) => movie.imdbID === selectedMovieID,
+    );
+    if (searchMovieWatchedList) {
+      setUserRating(searchMovieWatchedList.userRating);
+      setAddedToWatched(true);
+    } else {
+      setAddedToWatched(false);
+    }
+  }, [selectedMovieID, watchedMovies]);
 
   function handleAdd() {
     const newWatchedMovie = {
@@ -35,16 +54,26 @@ function Details() {
       Runtime: selectedMovie.Runtime,
       Genre: selectedMovie.Genre,
       imdbRating: selectedMovie.imdbRating,
+      Plot: selectedMovie.Plot,
+      Actors: selectedMovie.Actors,
+      Director: selectedMovie.Director,
       userRating,
     };
 
     addWatchedMovie(newWatchedMovie);
+    setAddedToWatched(true);
   }
 
   return (
     selectedMovie && (
       <section className={classes.details}>
         <header>
+          <Button
+            class__name={classes["btn-back"]}
+            onClick={() => setSelectedMovie(null)}
+          >
+            &larr;
+          </Button>
           <img
             src={selectedMovie.Poster}
             alt={`${selectedMovie.Title} poster`}
@@ -63,14 +92,20 @@ function Details() {
         </header>
 
         <section>
-          <StarRating
-            key={selectedMovieID}
-            maxRating={10}
-            size={24}
-            onSetRating={setUserRating}
-          />
+          {addedToWatched ? (
+            <p className={classes["rating"]}>
+              Movie added to watched list with rating ⭐{userRating}
+            </p>
+          ) : (
+            <StarRating
+              key={selectedMovieID}
+              maxRating={10}
+              size={24}
+              onSetRating={setUserRating}
+            />
+          )}
 
-          {userRating > 0 && (
+          {userRating > 0 && !addedToWatched && (
             <Button class__name={classes["btn-add"]} onClick={handleAdd}>
               <Plus size={16} />
               Add to watchlist
