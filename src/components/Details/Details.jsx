@@ -8,7 +8,12 @@ import classes from "./Details.module.css";
 
 function Details() {
   const [userRating, setUserRating] = useState(0);
-  const { selectedMovieID, addWatchedMovie, watchedMovies } = useDataContext();
+  const {
+    selectedMovieID,
+    addWatchedMovie,
+    watchedMovies,
+    clearSelectedMovie,
+  } = useDataContext();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [addedToWatched, setAddedToWatched] = useState(false);
 
@@ -64,14 +69,16 @@ function Details() {
     setAddedToWatched(true);
   }
 
+  function onBack() {
+    clearSelectedMovie();
+    setSelectedMovie(null);
+  }
+
   return (
     selectedMovie && (
       <section className={classes.details}>
         <header>
-          <Button
-            class__name={classes["btn-back"]}
-            onClick={() => setSelectedMovie(null)}
-          >
+          <Button class__name={classes["btn-back"]} onClick={onBack}>
             &larr;
           </Button>
           <img

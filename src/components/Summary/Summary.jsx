@@ -6,11 +6,15 @@ function Summary() {
   const { watchedMovies } = useDataContext();
 
   const averageRating =
-    watchedMovies.reduce((acc, cur) => acc + cur.userRating, 0) /
-    watchedMovies.length;
+    watchedMovies && watchedMovies.length > 0
+      ? watchedMovies.reduce((acc, cur) => acc + cur.userRating, 0) /
+        watchedMovies.length
+      : 0;
   const averageImdbRating =
-    watchedMovies.reduce((acc, cur) => acc + Number(cur.imdbRating), 0) /
-    watchedMovies.length;
+    watchedMovies && watchedMovies.length > 0
+      ? watchedMovies.reduce((acc, cur) => acc + Number(cur.imdbRating), 0) /
+        watchedMovies.length
+      : 0;
   const totalRuntime = watchedMovies.reduce(
     (acc, cur) => acc + Number(cur.Runtime.split(" ")[0]),
     0,

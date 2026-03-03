@@ -18,8 +18,13 @@ export function DataProvider({ children }) {
     setSelectedMovieID(movieID);
   }
 
+  function clearSelectedMovie() {
+    setSelectedMovieID(null);
+  }
+
   function addWatchedMovie(movie) {
     setWatchedMovies((movies) => [...movies, movie]);
+    setSelectedMovieID(null);
   }
 
   return (
@@ -29,6 +34,7 @@ export function DataProvider({ children }) {
         updateSelectedMovieID,
         watchedMovies,
         addWatchedMovie,
+        clearSelectedMovie,
       }}
     >
       {children}
