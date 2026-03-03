@@ -6,6 +6,7 @@ export const URL = `http://www.omdbapi.com/`;
 export function useMovies(query) {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (query.length < 3) return;
@@ -22,7 +23,7 @@ export function useMovies(query) {
 
         setMovies(data.Search);
       } catch (error) {
-        console.error(error.message);
+        setError(error.message);
       } finally {
         setIsLoading(false);
       }
@@ -30,5 +31,5 @@ export function useMovies(query) {
     fetchMovies();
   }, [query]);
 
-  return { movies, isLoading };
+  return { movies, isLoading, error };
 }
