@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelectedMovieID } from "../../context/DataContext";
+import { useDataContext } from "../../context/DataContext";
 import StarRating from "../StarRating/StarRating";
 import Button from "../Button/Button";
 import { Plus } from "lucide-react";
@@ -8,7 +8,7 @@ import classes from "./Details.module.css";
 
 function Details() {
   const [userRating, setUserRating] = useState(0);
-  const { selectedMovieID } = useSelectedMovieID();
+  const { selectedMovieID, addWatchedMovie } = useDataContext();
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   useEffect(() => {
@@ -24,6 +24,22 @@ function Details() {
   useEffect(() => {
     setUserRating(0);
   }, [selectedMovieID]);
+
+  function handleAdd() {
+    const newWatchedMovie = {
+      imdbID: selectedMovie.imdbID,
+      Title: selectedMovie.Title,
+      Year: selectedMovie.Year,
+      Poster: selectedMovie.Poster,
+      Released: selectedMovie.Released,
+      Runtime: selectedMovie.Runtime,
+      Genre: selectedMovie.Genre,
+      imdbRating: selectedMovie.imdbRating,
+      userRating,
+    };
+
+    addWatchedMovie(newWatchedMovie);
+  }
 
   return (
     selectedMovie && (
@@ -55,7 +71,7 @@ function Details() {
           />
 
           {userRating > 0 && (
-            <Button class__name={classes["btn-add"]}>
+            <Button class__name={classes["btn-add"]} onClick={handleAdd}>
               <Plus size={16} />
               Add to watchlist
             </Button>

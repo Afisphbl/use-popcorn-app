@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SelectedMovieIDProvider } from "./context/DataContext";
+import { DataProvider } from "./context/DataContext";
 import { useMovies } from "./components/useMovie/useMovies";
 import { Minus, Plus } from "lucide-react";
 import Search from "./components/Search/Search";
@@ -26,7 +26,7 @@ function App() {
       </nav>
 
       <main className="main">
-        <SelectedMovieIDProvider>
+        <DataProvider>
           <section className="box">
             <Button
               class__name="btn-toggle"
@@ -52,7 +52,7 @@ function App() {
               </div>
             )}
           </section>
-        </SelectedMovieIDProvider>
+        </DataProvider>
       </main>
     </>
   );

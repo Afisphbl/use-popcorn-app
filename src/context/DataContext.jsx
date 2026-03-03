@@ -1,23 +1,41 @@
 import React, { createContext, useContext, useState } from "react";
 
 const SelectedMovieIDContext = createContext();
+const WatchedMoviesContext = createContext();
 
-export function SelectedMovieIDProvider({ children }) {
+const DataContext = createContext();
+
+const value = {
+  selectedMovieID: null,
+  watchedMovies: [],
+};
+
+export function DataProvider({ children }) {
   const [selectedMovieID, setSelectedMovieID] = useState(null);
+  const [watchedMovies, setWatchedMovies] = useState([]);
 
   function updateSelectedMovieID(movieID) {
     setSelectedMovieID(movieID);
   }
 
+  function addWatchedMovie(movie) {
+    setWatchedMovies((movies) => [...movies, movie]);
+  }
+
   return (
-    <SelectedMovieIDContext.Provider
-      value={{ selectedMovieID, updateSelectedMovieID }}
+    <DataContext.Provider
+      value={{
+        selectedMovieID,
+        updateSelectedMovieID,
+        watchedMovies,
+        addWatchedMovie,
+      }}
     >
       {children}
-    </SelectedMovieIDContext.Provider>
+    </DataContext.Provider>
   );
 }
 
-export function useSelectedMovieID() {
-  return useContext(SelectedMovieIDContext);
+export function useDataContext() {
+  return useContext(DataContext);
 }

@@ -1,9 +1,9 @@
 import React from "react";
-import { useSelectedMovieID } from "../../context/DataContext";
+import { useDataContext } from "../../context/DataContext";
 import classes from "./MovieList.module.css";
 
 function MovieList({ movies }) {
-  const { updateSelectedMovieID } = useSelectedMovieID();
+  const { updateSelectedMovieID } = useDataContext();
   return (
     <ul className={`${classes.list} ${classes["list-movies"]}`}>
       {movies.map((movie) => (
