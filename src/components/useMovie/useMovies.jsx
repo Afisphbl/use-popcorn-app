@@ -8,8 +8,6 @@ export function useMovies(query) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const controller = new AbortController();
-
   useEffect(() => {
     if (query.length < 3) return;
 
@@ -17,9 +15,7 @@ export function useMovies(query) {
       setIsLoading(true);
       setError("");
       try {
-        const res = await fetch(`${URL}?apikey=${API_KEY}&s=${query}`, {
-          signal: controller.signal,
-        });
+        const res = await fetch(`${URL}?apikey=${API_KEY}&s=${query}`);
         if (!res.ok)
           throw new Error("Something went wrong with fetching movies");
 
@@ -38,9 +34,8 @@ export function useMovies(query) {
     return () => {
       setMovies([]);
       setError("");
-      controller.abort();
     };
-  }, [query, controller]);
+  }, [query]);
 
   return { movies, isLoading, error };
 }

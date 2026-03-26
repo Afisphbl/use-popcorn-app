@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useDataContext } from "../../context/DataContext";
 import classes from "./Summary.module.css";
 
@@ -36,4 +36,4 @@ function Summary() {
   );
 }
 
-export default Summary;
+export default memo(Summary);

@@ -45,7 +45,7 @@ function App() {
           <span>🍿</span>
           <h1>usePopcorn</h1>
         </div>
-        <Search ref={searchInputRef} value={query} onChange={handleSearch} />
+        <Search ref={searchInputRef} value={query} setQuery={setQuery} />
 
         <p className="num-results">Found {movies.length} results</p>
       </nav>
