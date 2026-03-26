@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import classes from "../Movie__list/MovieList.module.css";
 
 function WatchedMovies({ watchedMovies }) {
@@ -20,4 +20,4 @@ function WatchedMovies({ watchedMovies }) {
   );
 }
 
-export default memo(WatchedMovies);
+export default WatchedMovies;

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { DataProvider, useDataContext } from "./context/DataContext";
 import { useMovies } from "./components/useMovie/useMovies";
 import { Minus, Plus, Loader, TriangleAlert } from "lucide-react";
@@ -34,9 +34,9 @@ function App() {
     };
   });
 
-  function handleSearch(e) {
+  const handleSearch = useCallback((e) => {
     setQuery(e.target.value);
-  }
+  }, []);
 
   return (
     <>
@@ -45,7 +45,7 @@ function App() {
           <span>🍿</span>
           <h1>usePopcorn</h1>
         </div>
-        <Search ref={searchInputRef} value={query} setQuery={setQuery} />
+        <Search ref={searchInputRef} value={query} onChange={handleSearch} />
 
         <p className="num-results">Found {movies.length} results</p>
       </nav>

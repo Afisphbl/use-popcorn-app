@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React from "react";
 import { useDataContext } from "../../context/DataContext";
 import classes from "./MovieList.module.css";
 
@@ -23,4 +23,4 @@ function MovieList({ movies }) {
   );
 }
 
-export default memo(MovieList);
+export default MovieList;
